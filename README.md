@@ -3,6 +3,26 @@
 浏览器游玩中文 DOS 游戏
 
 ## 运行
+python3执行
+```
+# encoding=utf8
+import urllib.request, os
+
+from urllib.parse   import quote
+from urllib.request import urlopen
+
+from game_infos import game_infos
+
+PREFIX = "https://dos.zczc.cz/static/gamedata/"
+DESTINATION = os.path.normcase('static/gamedata/')
+
+for identifier in game_infos['games'].keys():
+    #urllib.request.urlretrieve(PREFIX + identifier + '.zip', os.path.join(DESTINATION, identifier + '.zip'))
+    url = PREFIX + quote(identifier) + '.zip'
+    path = os.path.join(DESTINATION, identifier + '.zip').encode('utf-8')
+    urllib.request.urlretrieve(url,path)
+```
+
 
 首先编译 `em-dosbox`，编译方法参见 [dreamlayers/em-dosbox: An Emscripten port of DOSBox](https://github.com/dreamlayers/em-dosbox)。将编译出的 `em-dosbox/src/dosbox.js` 和 `em-dosbox/src/dosbox.html.mem` 移动至 `static/dosbox` 文件夹下。然后运行 `generate.py` 生成 `game.data` 文件。最后运行 `app.py`
 
